@@ -170,10 +170,46 @@ let temp_array = [["ID", "Name", "Occupation", "Age"],
 ["98", "Bill", "Doctor’s Assistant", "26"]];
 
 let first_row = temp_array[0];
-console.log(typeof first_row);
+//console.log(typeof first_row);
 let empty_row = [];
-console.log(typeof empty_row)
+
 for(let i = 0; i < first_row.length; i++){
+    // first_row[i] = first_row[i].toLowerCase(); // this way directly converts the first array to lowercase
     empty_row.push(first_row[i].toLowerCase()); // note: using += will change empty_row into a string
 }
+
+temp_array.shift(temp_array); // removes the very first element (heading) the front of temp_array
+console.log(temp_array.length);
+// console.log(empty_row);
 console.log(empty_row);
+let array_of_objects = [];
+
+// temp_array.forEach((elem) => {
+//     console.log(elem);
+// });
+
+// loops through outer array
+for(let j = 0; j < temp_array.length; j++){
+
+    let empty_obj = {};
+
+    // loops through the inner array element
+    for(let k = 0; k < temp_array[j].length; k++){
+        let heading = empty_row[k]; // w/ the assumption each heading is responsible for one element -- hence index k used
+        empty_obj[heading] = temp_array[0][k];
+
+    }
+    console.log(empty_obj);
+}
+
+
+
+// const obj = {...temp_array}
+// console.log(obj);
+// const objects = {
+//     id: temp_array[0][0],
+//     name: temp_array[0][1],
+//     job: temp_array[0][2],
+//     age: temp_array[0][3]
+// }
+// console.log(objects.age);
