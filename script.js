@@ -239,7 +239,6 @@ outer:for(let j = 0; j < temp_array.length; j++){ // Note: this will only cycle 
 /* Finally, use the values of each object within the array and the array’s length property to calculate the
 average age of the group. This calculation should be accomplished using a loop. */
 
-
 // makes a copy of the array_of_objects array -- if don't want to change original array w/ .pop() below
 let array_change = array_of_objects.concat();
 
@@ -247,7 +246,7 @@ let array_change = array_of_objects.concat();
 array_change.pop();
 
 // initialize an object of new id, name, occupation, age key w/ respective values as given
-let obj_to_index_1 = {
+const obj_to_index_1 = { // or declare w/ "let" works too
     id: "48",
     name: "Barry",
     occupation: "Runner",
@@ -257,7 +256,7 @@ let obj_to_index_1 = {
 // .splice() JavaScript method allows add/remove elements to any place in the array
 array_change.splice(1, 0, obj_to_index_1);
 
-// .push() JavaScript method allows add elements to the end of an array
+// .push() JavaScript method allows add elements (here an object) to the end of an array
 array_change.push({
     id: "7",
     name: "Bilbo",
@@ -275,8 +274,8 @@ while(age_count < array_change.length){
     // assign the current profile to obj_profile variable
     let obj_profile = array_change[age_count];
 
-    // use dot notation to retrieve the value connected to the age key
-    // & Number prototype to typecast it from string to number
+    // use dot notation to retrieve the value connected to the age key and
+    // ... Number prototype to typecast it from string to number
     mean_age += Number(obj_profile.age);
 
     // increment by one to continue loop
@@ -292,3 +291,22 @@ mean_age = mean_age / array_change.length;
 console.log(array_change, "\n");
 console.log(`The average age of this current group is ${mean_age} years old.`);
 
+/* ------------------ Part 5: Full Circle ------------------ */
+
+// As a final task, transform the final set of data back into CSV format.
+// There are a number of ways to do this; be creative!
+
+
+// console.log(array_change.flat()); // well flat() array method didn't squash it 
+
+let back_to_str = "";
+let interim_array = [];
+
+console.log(array_change[0].age);
+
+for(let m = 0; m < array_change.length; m++){
+    // console.log(array_change[m]);
+    back_to_str += array_change[m]; //+ ',' + array_change + ',' + array_change[]
+}
+
+console.log(back_to_str);
