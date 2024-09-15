@@ -262,26 +262,33 @@ array_change.push({
     id: "7",
     name: "Bilbo",
     occupation: "None", 
-    age: "111"});
+    age: "111"
+});
 
-console.log(array_change);
-
+// declare block of variables for later use 
 let mean_age = 0;
 let age_count = 0;
-console.log(typeof array_change[0].age);
+// console.log(typeof array_change[0].age);
+
 // iterate via array of object profile
 while(age_count < array_change.length){
     // assign the current profile to obj_profile variable
     let obj_profile = array_change[age_count];
 
     // use dot notation to retrieve the value connected to the age key
-    mean_age += obj_profile.age;
+    // & Number prototype to typecast it from string to number
+    mean_age += Number(obj_profile.age);
 
     // increment by one to continue loop
     age_count++;
 
 }
-console.log(typeof mean_age, mean_age);
+//console.log(typeof mean_age, mean_age);
+
+// calculate the average age of the group
 mean_age = mean_age / array_change.length;
-//console.log(`The average age of this current group is ${mean_age}.`);
+
+// console.log() block of results
+console.log(array_change, "\n");
+console.log(`The average age of this current group is ${mean_age} years old.`);
 
