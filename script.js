@@ -4,6 +4,7 @@
 // # Submit Github Link to Canvas
 // ####################################
 
+
 /* ------------------ Part 1: Refactoring Old Code ------------------ */
 
 // //Variables
@@ -35,7 +36,9 @@
 //   }
 // }
 
+
 /* ------------------ Part 1: Expanding Functionality ------------------ */
+
 
 // Begin with the following task:
     // Declare a variable that stores the number of columns in each row of data within the CSV.
@@ -157,56 +160,58 @@ for (let i in str) {
 // Implement the following:
 
     /* For each row of data in the result array produced by your code above, create an object where the
-       key of each value is the heading for that value’s column. */
+    key of each value is the heading for that value’s column. */
             // Convert these keys to all lowercase letters for consistency.
     // Store these objects in an array, in the order that they were originally listed.
     /* Since the heading for each column will be stored in the object keys, you do not need to create an
-       object for the heading row itself. */
+    object for the heading row itself. */
 
+/* Important: While this functionality can be built into the original CSV parser you built in Part 2, we are
+intentionally creating two different algorithms to test different skillsets. Please leave these sections
+separate even if it would be more efficient to combine them. */
+
+// input given to start Part 3
 let temp_array = [["ID", "Name", "Occupation", "Age"],
 ["42", "Bruce", "Knight", "41"],
 ["57", "Bob", "Fry Cook", "19"],
 ["63", "Blaine", "Quiz Master", "58"],
 ["98", "Bill", "Doctor’s Assistant", "26"]];
 
+// declare first_row to be the first array element found in temp_array;
 let first_row = temp_array[0];
-//console.log(typeof first_row);
+
+// empty array container to be appended to
 let empty_row = [];
 
+// convert each elements within first row into lowercase
 for(let i = 0; i < first_row.length; i++){
     // first_row[i] = first_row[i].toLowerCase(); // this way directly converts the first array to lowercase
-    empty_row.push(first_row[i].toLowerCase()); // note: using += will change empty_row into a string
+    empty_row.push(first_row[i].toLowerCase()); // Note: using += will change empty_row into a string
 }
 
-temp_array.shift(temp_array); // removes the very first element (heading) the front of temp_array
-console.log(temp_array.length);
-// console.log(empty_row);
-console.log(empty_row);
+// removes the very first element (heading) the front of temp_array
+temp_array.shift(temp_array); 
 
 // declare empty array to collect the objects from below for-loop
 let array_of_objects = [];
 
-// temp_array.forEach((elem) => {
-//     console.log(elem);
-// }); ---- decided against using forEach array method b/c want to access the element of the inner array
-
 // loops through outer array (labeled both loops but did NOT even use break ...no need for distinction)
-outer:for(let j = 0; j < temp_array.length; j++){
+// decided against using forEach array method b/c want to access the element of the inner array
+outer:for(let j = 0; j < temp_array.length; j++){ // Note: this will only cycle 4 times b/c only 4 outer elements
 
     // declare an empty object for later use below
     let empty_obj = {};
 
-    // loops through the inner array element
-    inner:for(let k = 0; k < temp_array[j].length; k++){
+    // iterate via inner array element
+    inner:for(let k = 0; k < temp_array[j].length; k++){ // Note: Coincidentally this will only run 4 times too
 
         // given that each column "heading" has a value underneath
         let heading = empty_row[k]; 
 
-        // creating a key of "heading" key w/ value of the [[string]]
+        // add a key of "heading" key : [[string]] value pair to empty_obj{}  
         empty_obj[heading] = temp_array[j][k];
 
-    }
-    // console.log(empty_obj);
+    } // end of inner for-loop
 
     // append (in order) each object to the earlier declared empty array container
     array_of_objects.push(empty_obj);
@@ -214,14 +219,69 @@ outer:for(let j = 0; j < temp_array.length; j++){
 } // end of outer for-loop
 
 // print out the Part 3 results!
-console.log(array_of_objects);
+//console.log(array_of_objects);
 
-// const obj = {...temp_array}
-// console.log(obj);
-// const objects = {
-//     id: temp_array[0][0],
-//     name: temp_array[0][1],
-//     job: temp_array[0][2],
-//     age: temp_array[0][3]
-// }
-// console.log(objects.age);
+
+/* ------------------ Part 4: Sorting and Manipulating Data ------------------ */
+
+// Using array methods, accomplish the following tasks, in order upon the result of Part 3:
+// 1. Remove the last element from the sorted array.
+// 2. Insert the following object at index 1:
+    // { id: "48", name: "Barry", occupation: "Runner", age: "25" }
+// 3. Add the following object to the end of the array:
+    // { id: "7", name: "Bilbo", occupation: "None", age: "111" }
+// So far, the results should look like this:
+/* [{ id: "42", name: "Bruce", occupation: "Knight", age: "41" },
+    { id: "48", name: "Barry", occupation: "Runner", age: "25" },
+    { id: "57", name: "Bob", occupation: "Fry Cook", age: "19" },
+    { id: "63", name: "Blaine", occupation: "Quiz Master", age: "58" },
+    { id: "7", name: "Bilbo", occupation: "None", age: "111" }] */
+/* Finally, use the values of each object within the array and the array’s length property to calculate the
+average age of the group. This calculation should be accomplished using a loop. */
+
+
+// makes a copy of the array_of_objects array -- if don't want to change original array w/ .pop() below
+let array_change = array_of_objects.concat();
+
+// .pop() off last element from array using JavaScript built-in array method
+array_change.pop();
+
+// initialize an object of new id, name, occupation, age key w/ respective values as given
+let obj_to_index_1 = {
+    id: "48",
+    name: "Barry",
+    occupation: "Runner",
+    age: "25"
+}
+
+// .splice() JavaScript method allows add/remove elements to any place in the array
+array_change.splice(1, 0, obj_to_index_1);
+
+// .push() JavaScript method allows add elements to the end of an array
+array_change.push({
+    id: "7",
+    name: "Bilbo",
+    occupation: "None", 
+    age: "111"});
+
+console.log(array_change);
+
+let mean_age = 0;
+let age_count = 0;
+console.log(typeof array_change[0].age);
+// iterate via array of object profile
+while(age_count < array_change.length){
+    // assign the current profile to obj_profile variable
+    let obj_profile = array_change[age_count];
+
+    // use dot notation to retrieve the value connected to the age key
+    mean_age += obj_profile.age;
+
+    // increment by one to continue loop
+    age_count++;
+
+}
+console.log(typeof mean_age, mean_age);
+mean_age = mean_age / array_change.length;
+//console.log(`The average age of this current group is ${mean_age}.`);
+
