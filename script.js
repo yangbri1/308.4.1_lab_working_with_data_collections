@@ -8,33 +8,74 @@
 /* ------------------ Part 1: Refactoring Old Code ------------------ */
 
 // //Variables
-// let string = `ID,Name,Occupation,Age\n42,Bruce,Knight,41\n57,Bob,Fry Cook,19\n63,Blaine,Quiz Master,58\n98,Bill,Doctor’s Assistant,26`;
+let string = `ID,Name,Occupation,Age\n42,Bruce,Knight,41\n57,Bob,Fry Cook,19\n63,Blaine,Quiz Master,58\n98,Bill,Doctor’s Assistant,26`;
 
-// // Memory allocation for future values
-// let cell = ``;
-// let row = ``;
+// declaration block of variables 
+let cell = "";
+let row = "";
+let row_ary = [];
+let main_array = [];
 
-// for (let i in string) {
-//   //For index in string
-//   if (string[i] == ',') {
-//     row += cell + ' '; // Add cell to row
-//     cell = ``; // Emtying cell to reuse
-//   } else if (string[i] == '\n') {
-//     row += cell; // Add final cell to row
-//     cell = ``; // Clear cell
-//     console.log(row); // Print row
-//     row = ``; // Clear row
-//   } else {
-//     cell += string[i]; //If char, add to current cell
-//   }
+// iterates via the whole string
+for(let i = 0; i < string.length; i++){
+  
+    // if the current iteration character is a comma
+    if (string[i] == ','){
+        
+        // apply JS array .push() method of the cell to row_ary,
+        // ... since it had finished appending char for a word
+        row_ary.push(cell);
 
-//   //If we reach final character in string, print final row
-//   if (i == string.length - 1) {
-//     //string.length is length of string - 114 - index is 114
-//     row += cell; // Add final cell
-//     console.log(row); // Print row
-//   }
-// }
+        // clear away the cell values for next word
+        cell = ""; 
+
+    } 
+
+    // if the character is a "\n" esc char
+    else if (string[i] == '\n') {
+        
+        // .push() cell contents to array row_ary as "\n" here
+        // ... also indicates enough char is there for a word
+        row_ary.push(cell);
+
+        // .push() the array "row_ary" to "main_ary" as an element
+        // as it is the end of a row/line
+        main_array.push(row_ary);
+        
+        // clear cell content more concatenating
+        cell = ``; 
+        // clear row_ary to concatenate more cell word entries
+        row_ary = [];
+
+    } 
+
+    // otherwise: any other characters
+    else{
+
+        // include them to string cell
+        cell += string[i]; 
+    }
+
+    // Note: last row does NOT end w/ an newline so it would NOT be detected
+    //       using the conditionals above. Hence, this one is a special one
+    //       just to catch the last row
+    if(i == string.length - 1){
+    
+        // .push() cell last cell to row_ary
+        row_ary.push(cell);
+
+        // .push() array "row_ary" to "main_ary" as an array element
+        main_array.push(row_ary);
+    
+    }
+
+    // not here else it would push every cycle (114 times since there are 114 characters)
+    // main_array.push(row_ary); 
+
+} // end of for-loop block
+
+// output the original given string as an array of arrays
+console.log(main_array);
 
 
 /* ------------------ Part 2: Expanding Functionality ------------------ */
@@ -53,11 +94,11 @@ console.log(`/* ----------------------- Part 2: Expanding Functionality --------
     // Each row should be stored in a parent array, with the heading row located at index 0.
 // Cache this two-dimensional array in a variable for later use.
 
-let string = `ID,Name,Occupation,Age\n42,Bruce,Knight,41\n57,Bob,Fry Cook,19\n63,Blaine,Quiz Master,58\n98,Bill,Doctor’s Assistant,26`;
+// let string = `ID,Name,Occupation,Age\n42,Bruce,Knight,41\n57,Bob,Fry Cook,19\n63,Blaine,Quiz Master,58\n98,Bill,Doctor’s Assistant,26`;
 
-// Memory allocation for future values
-let cell = ``;
-let row = ``;
+// // Memory allocation for future values
+// let cell = ``;
+// let row = ``;
 
 let columns = 1;
 //let line_counter = 1;
@@ -68,50 +109,6 @@ let row_array = [];
 let whole_array = [];
 
 let slot = [];
-let i = 0
-function grab_line(i, row){
-    for (; i < string.length; i++) {
-        // encountering the newline escape character
-        if (string[i] === '\n') {
-            break;
-            
-        }
-        else{
-            row += string[i];
-        }
-    
-    }
-    return row;
-}
-
-function make_cells(row, cell){
-    let j = 0;
-    // traverse through the line
-    while(j < row.length){
-        // if the delimiter comma were to be found
-        if(row[j] === ','){
-            // check if the other cells are empty
-            slot[j] = cell;
-            // empty out the current cell for next iteration
-            cell = "";
-        }
-        // if the character is NOT a comma, append it to a cell
-        else{
-            cell += row[j];
-        }
-        // increment for the loop to operate
-        j++;
-    }
-    // returns the results in console.log() form
-    return console.log(slot);//return(console.log(cell2, cell3, cell4, cell1));
-}
-
-row = "";
-row = grab_line(i, row);
-//console.log(i, row);
-make_cells(row, cell);
-i += row.length;
-
 // // iterate through the string to find number of columns per row
 // for(let i = 0; i < string.length; i++){
     
@@ -142,7 +139,7 @@ let str1 = "even,odd,natural"
 let str2 = "complex,integer"
 let str = "even,odd,natural\ncomplex,integer,float\n";
 // console.log(str);
-row_array.push(str1.split(","));
+//row_array.push(str1.split(","));
 // row_array.push(str1.split(","));
 
 // //console.log(row_array);
@@ -173,8 +170,9 @@ for(let k = 0; k < str.length && comma_count < columns; k++){
     if(str[k] != "\n"){
         // as well as not a comma
         if(str[k] != ","){
-            // append it to word
+            // append character to word
             word += str[k];
+            // word = "";
         }
         // ow
         else if(str[k] == ","){
@@ -184,33 +182,37 @@ for(let k = 0; k < str.length && comma_count < columns; k++){
             comma_count++;
         }
     }
+    // encounter the "\n" escape character
     else{
-
+        row_array.push(word);
+        break;
+        
     }
+
 }
 console.log(row_array);
 
-for (let i in str) {
-  //For index in string
-  if (string[i] == ',') {
-    row += cell + ' '; // Add cell to row
-    cell = ``; // Emtying cell to reuse
-  } else if (string[i] == '\n') {
-    row += cell; // Add final cell to row
-    cell = ``; // Clear cell
-    console.log(row); // Print row
-    row = ``; // Clear row
-  } else {
-    cell += string[i]; //If char, add to current cell
-  }
+// for (let i in str) {
+//   //For index in string
+//   if (string[i] == ',') {
+//     row += cell + ' '; // Add cell to row
+//     cell = ``; // Emtying cell to reuse
+//   } else if (string[i] == '\n') {
+//     row += cell; // Add final cell to row
+//     cell = ``; // Clear cell
+//     console.log(row); // Print row
+//     row = ``; // Clear row
+//   } else {
+//     cell += string[i]; //If char, add to current cell
+//   }
 
-  //If we reach final character in string, print final row
-  if (i == string.length - 1) {
-    //string.length is length of string - 114 - index is 114
-    row += cell; // Add final cell
-    console.log(row); // Print row
-  }
-}
+//   //If we reach final character in string, print final row
+//   if (i == string.length - 1) {
+//     //string.length is length of string - 114 - index is 114
+//     row += cell; // Add final cell
+//     console.log(row); // Print row
+//   }
+// }
 
 
 /* ------------------ Part 3: Transforming Data ------------------ */
