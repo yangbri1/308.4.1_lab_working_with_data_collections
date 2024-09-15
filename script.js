@@ -37,8 +37,8 @@
 // }
 
 
-/* ------------------ Part 1: Expanding Functionality ------------------ */
-console.log(`/* ----------------------- Part 1: Expanding Functionality ----------------------- */`);
+/* ------------------ Part 2: Expanding Functionality ------------------ */
+console.log(`/* ----------------------- Part 2: Expanding Functionality ----------------------- */`);
 // Begin with the following task:
     // Declare a variable that stores the number of columns in each row of data within the CSV.
     // Instead of hard-coding four columns per row, expand your code to accept any number of
@@ -305,7 +305,7 @@ console.log("*/---------------------------- Part 5: Full Circle ----------------
 // console.log(array_change.flat()); // well flat() array method didn't squash it 
 
 // call the Object.keys() method an attribute of the Object.prototype to retrieve the actual key names
-let back_to_str = Object.keys(array_change[0]);
+let back_to_str = Object.keys(array_change[0]) + "\n";
 // let interim_array = [];
 
 // console.log(typeof back_to_str);
@@ -315,21 +315,25 @@ let back_to_str = Object.keys(array_change[0]);
 for(let m = 0; m < array_change.length; m++){
     // console.log(array_change[m]);
     
-    // // if it was the last object do NOT add the newline "\n" escape character/sequence to the end
+    /* Method #1: iterate through each object element and manually concatenate to str */
+    // if it was the last object do NOT add the newline "\n" escape character/sequence to the end
     // if(m == array_change.length){
     //     back_to_str += array_change[m].id + ',' + array_change[m].name + ',' + array_change[m].occupation + ',' + array_change[m].age;
     // }
 
-    // // otherwise concatenate this full format into the declared "back_to_str" string variable
-    // else{
-    //     back_to_str += array_change[m].id + ',' + array_change[m].name + ',' + array_change[m].occupation + ',' + array_change[m].age + "\n";
-    // }
+    // otherwise concatenate this full format into the declared "back_to_str" string variable
+    //else{
+    back_to_str += array_change[m].id + ',' + array_change[m].name + ',' + array_change[m].occupation + ',' + array_change[m].age + "\n";
+    //}
 
+    /* Method #2: utilize built-in JavaScript Object.prototype attributes */
     // nearly equivalent to above two conditionals but invoking the Object.values() method here
-    back_to_str += Object.values(array_change[m]) + "\n";
+    //back_to_str += Object.values(array_change[m]) + "\n";
+
+    /* Method #3: JSON.stringify(array_change[m]) ??? */
 }
 
-// console.log(back_to_str);
+//console.log(back_to_str);
 
 // console.log() out a copy of "back_to_str" using the JS built-in String.substring method w/o the last elem ("\n")
 console.log(back_to_str.substr(0, back_to_str.length - 1));
