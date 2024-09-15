@@ -182,27 +182,39 @@ temp_array.shift(temp_array); // removes the very first element (heading) the fr
 console.log(temp_array.length);
 // console.log(empty_row);
 console.log(empty_row);
+
+// declare empty array to collect the objects from below for-loop
 let array_of_objects = [];
 
 // temp_array.forEach((elem) => {
 //     console.log(elem);
-// });
+// }); ---- decided against using forEach array method b/c want to access the element of the inner array
 
-// loops through outer array
-for(let j = 0; j < temp_array.length; j++){
+// loops through outer array (labeled both loops but did NOT even use break ...no need for distinction)
+outer:for(let j = 0; j < temp_array.length; j++){
 
+    // declare an empty object for later use below
     let empty_obj = {};
 
     // loops through the inner array element
-    for(let k = 0; k < temp_array[j].length; k++){
-        let heading = empty_row[k]; // w/ the assumption each heading is responsible for one element -- hence index k used
-        empty_obj[heading] = temp_array[0][k];
+    inner:for(let k = 0; k < temp_array[j].length; k++){
+
+        // given that each column "heading" has a value underneath
+        let heading = empty_row[k]; 
+
+        // creating a key of "heading" key w/ value of the [[string]]
+        empty_obj[heading] = temp_array[j][k];
 
     }
-    console.log(empty_obj);
-}
+    // console.log(empty_obj);
 
+    // append (in order) each object to the earlier declared empty array container
+    array_of_objects.push(empty_obj);
 
+} // end of outer for-loop
+
+// print out the Part 3 results!
+console.log(array_of_objects);
 
 // const obj = {...temp_array}
 // console.log(obj);
