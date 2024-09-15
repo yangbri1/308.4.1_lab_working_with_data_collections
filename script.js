@@ -38,8 +38,7 @@
 
 
 /* ------------------ Part 1: Expanding Functionality ------------------ */
-
-
+console.log(`/* ----------------------- Part 1: Expanding Functionality ----------------------- */`);
 // Begin with the following task:
     // Declare a variable that stores the number of columns in each row of data within the CSV.
     // Instead of hard-coding four columns per row, expand your code to accept any number of
@@ -154,7 +153,9 @@ for (let i in str) {
   }
 }
 
+
 /* ------------------ Part 3: Transforming Data ------------------ */
+console.log("/* ----------------------- Part 3: Transforming Data ----------------------- */");
 
 // In order to make it more obvious what the data is, we will transform our rows into objects.
 // Implement the following:
@@ -219,10 +220,11 @@ outer:for(let j = 0; j < temp_array.length; j++){ // Note: this will only cycle 
 } // end of outer for-loop
 
 // print out the Part 3 results!
-//console.log(array_of_objects);
+console.log(array_of_objects, "\n");
 
 
 /* ------------------ Part 4: Sorting and Manipulating Data ------------------ */
+console.log('/* ------------------ Part 4: Sorting and Manipulating Data ------------------ */');
 
 // Using array methods, accomplish the following tasks, in order upon the result of Part 3:
 // 1. Remove the last element from the sorted array.
@@ -241,6 +243,9 @@ average age of the group. This calculation should be accomplished using a loop. 
 
 // makes a copy of the array_of_objects array -- if don't want to change original array w/ .pop() below
 let array_change = array_of_objects.concat();
+
+// sort the entire array as instructed -- for no change to OG array use toSorted)() method
+array_change.sort();
 
 // .pop() off last element from array using JavaScript built-in array method
 array_change.pop();
@@ -275,7 +280,7 @@ while(age_count < array_change.length){
     let obj_profile = array_change[age_count];
 
     // use dot notation to retrieve the value connected to the age key and
-    // ... Number prototype to typecast it from string to number
+    // ... Number to typecast it from string to number
     mean_age += Number(obj_profile.age);
 
     // increment by one to continue loop
@@ -289,24 +294,42 @@ mean_age = mean_age / array_change.length;
 
 // console.log() block of results
 console.log(array_change, "\n");
-console.log(`The average age of this current group is ${mean_age} years old.`);
+console.log(`The average age of this current group is ${mean_age} years old.\n`);
 
 /* ------------------ Part 5: Full Circle ------------------ */
-
+console.log("*/---------------------------- Part 5: Full Circle ---------------------------- /*");
 // As a final task, transform the final set of data back into CSV format.
 // There are a number of ways to do this; be creative!
 
 
 // console.log(array_change.flat()); // well flat() array method didn't squash it 
 
-let back_to_str = "";
-let interim_array = [];
+// call the Object.keys() method an attribute of the Object.prototype to retrieve the actual key names
+let back_to_str = Object.keys(array_change[0]);
+// let interim_array = [];
 
-console.log(array_change[0].age);
+// console.log(typeof back_to_str);
+// console.log(array_change[0].age);
 
+// iterate via array_change (array of profile objects)
 for(let m = 0; m < array_change.length; m++){
     // console.log(array_change[m]);
-    back_to_str += array_change[m]; //+ ',' + array_change + ',' + array_change[]
+    
+    // // if it was the last object do NOT add the newline "\n" escape character/sequence to the end
+    // if(m == array_change.length){
+    //     back_to_str += array_change[m].id + ',' + array_change[m].name + ',' + array_change[m].occupation + ',' + array_change[m].age;
+    // }
+
+    // // otherwise concatenate this full format into the declared "back_to_str" string variable
+    // else{
+    //     back_to_str += array_change[m].id + ',' + array_change[m].name + ',' + array_change[m].occupation + ',' + array_change[m].age + "\n";
+    // }
+
+    // nearly equivalent to above two conditionals but invoking the Object.values() method here
+    back_to_str += Object.values(array_change[m]) + "\n";
 }
 
-console.log(back_to_str);
+// console.log(back_to_str);
+
+// console.log() out a copy of "back_to_str" using the JS built-in String.substring method w/o the last elem ("\n")
+console.log(back_to_str.substr(0, back_to_str.length - 1));
